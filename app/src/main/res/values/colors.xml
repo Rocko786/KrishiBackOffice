@@ -5,6 +5,32 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#F63131</color>
+    <color name="colorPrimaryDark">#DAF4BD</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green">#5FB709</color>
+    <color name="Red">#EB0D0D</color>
+    <color name="blueish">#17A2C0</color>
+    <color name="Black">#000000</color>
+    <color name="Blacklogo">#262626</color>
+    <color name="defaultColor">#000000</color>
+    <color name="gray">#7E000000</color>
+    <color name="darkgray">#B2000000</color>
+    <color name="lightgray">#1D000000</color>
+    <color name="darkgreen">#026909</color>
+    <color name="OffWhite">#36FFFFFF</color>
+    <color name="DarkBlue">#250285</color>
+    <color name="back_dasboard">#f8fafb</color>
+    <color name="darkTextColor">#087208</color>
+    <color name="dashboard_subtitle">#B3E374</color>
+    <color name="color_username">#101010</color>
+    <color name="color_usercontact">#0E0E0E</color>
+    <color name="bk_dashboard">#B3E374</color>
+    <color name="toolbar_color">#46710C</color>
+
+    <color name="dashboard_color">#E6F3D9</color>
+
+
+    <color name="yourSelectedColor">#ff0000</color>
 </resources>
