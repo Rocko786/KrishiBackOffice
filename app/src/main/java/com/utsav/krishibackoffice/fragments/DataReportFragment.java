@@ -360,7 +360,7 @@ public class DataReportFragment extends Fragment {
     }
     private void getSelectedClimate(ClimateListModel climateListModel) {
         ClimateId=climateListModel.getClimateId();
-        bindVegCategory(ClimateId,VegTypeId);
+        //bindVegCategory(ClimateId,VegTypeId);
     }
     private void bindVegType() {
         vegTypeListModelArrayList.clear();
