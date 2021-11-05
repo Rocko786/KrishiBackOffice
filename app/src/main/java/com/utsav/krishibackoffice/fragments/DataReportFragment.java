@@ -175,14 +175,14 @@ public class DataReportFragment extends Fragment {
     }
     private void getAllReports() {
         if(txtFromdate.equals("")){
-            txtFromdate=null;
+            txtFromdate="NULL";
         }
 
         if(txtTodate.equals("")){
-            txtTodate=null;
+            txtTodate="NULL";
         }
         try{
-
+            dataEntryReportListModelArrayList.clear();
             JSONObject model = new JSONObject();
             model.put("FromDate", txtFromdate);
             model.put("ToDate", txtTodate);
@@ -197,24 +197,24 @@ public class DataReportFragment extends Fragment {
             DataEntryModel entrymodel;
             entrymodel=new DataEntryModel(txtFromdate,txtTodate,ClimateId,VegPhaseId,VegCategoryId,VegTypeId,VegSubCategoryId,VegId,UserId);
 
-            dataEntryReportViewModel=ViewModelProviders.of(this).get(DataEntryReportViewModel.class);
-            dataEntryReportViewModel.getDataEntryReportGetAll(entrymodel).observe(mainActivity, datareports -> {
+                 dataEntryReportViewModel=ViewModelProviders.of(this).get(DataEntryReportViewModel.class);
+                dataEntryReportViewModel.getDataEntryReportGetAll(entrymodel).observe(mainActivity, datareports -> {
                 List<DataEntryReportListModel> dataEntryReportListModels = datareports.getDataEntryReportListModels();
                 dataEntryReportListModelArrayList.addAll(dataEntryReportListModels);
+                   // dataEntryReportAdapter.notifyDataSetChanged();
+                    if(dataEntryReportListModelArrayList.size() > 0){
+                        rel_search.setVisibility(View.GONE);
+                        rel_report.setVisibility(View.VISIBLE);
+                        setupRecyclerView();
 
+                    }
+                    else {
+                        showAlertMessage("Data Not Found");
+                        rel_search.setVisibility(View.VISIBLE);
+                        rel_report.setVisibility(View.GONE);
+                    }
             });
-            if(dataEntryReportListModelArrayList.size() > 0){
-                dataEntryReportAdapter.notifyDataSetChanged();
-                rel_search.setVisibility(View.GONE);
-                rel_report.setVisibility(View.VISIBLE);
-                setupRecyclerView();
 
-            }
-            else {
-                showAlertMessage("Data Not Found");
-                rel_search.setVisibility(View.VISIBLE);
-                rel_report.setVisibility(View.GONE);
-            }
 
 
         }

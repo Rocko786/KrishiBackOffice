@@ -45,7 +45,7 @@ public interface KrishiApi {
                              @Query("VegSubCategoryId") int VegSubCategoryId);
 
 
-    @POST("KrishiDataSave/GetAllReport")
+    @GET("KrishiDataSave/GetAllReport")
     Call<DataEntryReportResponse> getDataEntryReportGetAll(@Query("FromDate") String FromDate,
                                                            @Query("ToDate") String  ToDate,
                                                            @Query("ClimateId") int ClimateId,

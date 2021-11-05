@@ -14,23 +14,25 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TableRow android:background="#DAE8FC" android:padding="5dp">
+            <TableRow android:background="#DAE8FC"
+                android:padding="5dp"
+                android:weightSum="3">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1"
                     android:textAlignment="center"
                     android:id="@+id/txt_serial"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="03/11/2021"
                     android:textAlignment="center"
                     android:id="@+id/txt_date"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="5"

@@ -8,8 +8,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.utsav.krishibackoffice.R;
+import com.utsav.krishibackoffice.StoreInfo.LocalStorage;
+import com.utsav.krishibackoffice.activities.MainActivity;
+import com.utsav.krishibackoffice.models.UserModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,51 +23,67 @@ import com.utsav.krishibackoffice.R;
  */
 public class MyProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    TextView txt_name,txt_email,txt_mobile,txt_usertype,txt_usercode;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    LocalStorage localStorage;
+    UserModel user;
+    int UserId;
+    String Username,UserContact,UserCode,Email,UserType,UserImage;
+    MainActivity mainActivity;
     public MyProfileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static MyProfileFragment newInstance(String param1, String param2) {
         MyProfileFragment fragment = new MyProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_profile, container, false);
+        View view=inflater.inflate(R.layout.fragment_my_profile, container, false);
+        intance(view);
+        setValue();
+        return view;
+    }
+
+    private void setValue() {
+        txt_name.setText(Username);
+        txt_email.setText(Email);
+        txt_usertype.setText(UserType);
+        txt_mobile.setText(UserContact);
+        txt_usercode.setText(UserCode);
+
+    }
+
+    private void intance(View view) {
+
+        mainActivity=(MainActivity)getActivity();
+        localStorage = new LocalStorage(mainActivity);
+        String userString = localStorage.getUserLogin();
+        Gson gson = new Gson();
+        user = gson.fromJson(userString, UserModel.class);
+        if (user != null) {
+            UserId=user.getUserId();
+            Username=user.getUserName();
+            UserContact=user.getContactNo();
+            Email=user.getEmail();
+            UserCode=user.getUserCode();
+            UserImage=user.getUserImage();
+            UserType=user.getUserType();
+        }
+        txt_name=view.findViewById(R.id.txt_name);
+        txt_usercode=view.findViewById(R.id.txt_usercode);
+        txt_email=view.findViewById(R.id.txt_email);
+        txt_mobile=view.findViewById(R.id.txt_mobile);
+        txt_usertype=view.findViewById(R.id.txt_usertype);
     }
 
 
