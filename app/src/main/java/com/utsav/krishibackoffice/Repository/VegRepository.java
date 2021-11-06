@@ -42,5 +42,24 @@ public class VegRepository {
         });
         return useData;
     }
+    public MutableLiveData<VegResponse> getVegForData(int VegCategoryId, int VegSubCategoryId){
+        MutableLiveData<VegResponse> useData = new MutableLiveData<>();
+        krishiApi.getVegForDataSave(VegCategoryId,VegSubCategoryId).enqueue(new Callback<VegResponse>() {
+            @Override
+            public void onResponse(Call<VegResponse> call,
+                                   Response<VegResponse> response) {
+                if (response.isSuccessful()){
+                    useData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VegResponse> call, Throwable t) {
+                useData.setValue(null);
+            }
+        });
+        return useData;
+    }
+
 
 }

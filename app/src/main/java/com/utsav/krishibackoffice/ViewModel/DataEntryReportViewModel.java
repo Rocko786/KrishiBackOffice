@@ -24,4 +24,15 @@ public class DataEntryReportViewModel extends ViewModel {
         return dataEntryReportResponseMutableLiveData;
     }
 
+    public LiveData<DataEntryReportResponse> entryDataSave(DataEntryModel model) {
+        dataEntryReportResponseMutableLiveData=null;
+        if (dataEntryReportResponseMutableLiveData != null) {
+            return dataEntryReportResponseMutableLiveData;
+        }
+        dataEntryReportRepository = DataEntryReportRepository.getInstance();
+        dataEntryReportResponseMutableLiveData = dataEntryReportRepository.entryDataSave(model);
+        return dataEntryReportResponseMutableLiveData;
+    }
+
+
 }

@@ -7,9 +7,14 @@ public class VegListModel {
     @SerializedName("VegId")
     @Expose
     private int VegId;
+
     @SerializedName("VegName")
     @Expose
     private String VegName;
+
+    @SerializedName("Quantity")
+    @Expose
+    private String Quantity;
 
     public int getVegId() {
         return VegId;
@@ -31,4 +36,11 @@ public class VegListModel {
         return VegName;
     }
 
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        Quantity = quantity;
+    }
 }

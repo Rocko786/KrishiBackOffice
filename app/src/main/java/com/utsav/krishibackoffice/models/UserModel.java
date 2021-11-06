@@ -11,6 +11,7 @@ public class UserModel {
     private int UserTypeId;
     private String UserCode;
 
+    private String BlockName;
     public String getUserImage() {
         return UserImage;
     }
@@ -21,7 +22,7 @@ public class UserModel {
 
     private String UserImage;
 
-    public UserModel(int userId, String userName, String contactNo, String email, int userTypeId, String userCode, String userImage, String userType) {
+    public UserModel(int userId, String userName, String contactNo, String email, int userTypeId, String userCode, String userImage, String userType,String blockName) {
         UserId = userId;
         UserName = userName;
         ContactNo = contactNo;
@@ -30,6 +31,7 @@ public class UserModel {
         UserCode = userCode;
         UserImage = userImage;
         UserType = userType;
+        BlockName=blockName;
     }
 
     private String UserType;
@@ -107,7 +109,13 @@ public class UserModel {
         ContactNo = contactNo;
     }
 
+    public String getBlockName() {
+        return BlockName;
+    }
 
+    public void setBlockName(String blockName) {
+        BlockName = blockName;
+    }
 
 
 }

@@ -35,6 +35,10 @@ public class UserResponse {
     @Expose
     private String UserImage;
 
+    @SerializedName("BlockName")
+    @Expose
+    private String BlockName;
+
     public String getUserType() {
         return UserType;
     }
@@ -49,6 +53,13 @@ public class UserResponse {
 
     public void setUserImage(String userImage) {
         UserImage = userImage;
+    }
+    public String getBlockName() {
+        return BlockName;
+    }
+
+    public void setBlockName(String blockName) {
+        BlockName = blockName;
     }
 
 

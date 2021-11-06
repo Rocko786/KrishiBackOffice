@@ -15,8 +15,8 @@
             android:id="@+id/scr_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/lin_btnsearch"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/lin_btnsearch">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -37,12 +37,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:text="তারিখ হইতে:"
+                        android:text="Date : "
                         android:textColor="@color/toolbar_color"
                         android:textSize="@dimen/report_text_size" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txt_current"
+                        android:id="@+id/txt_selectdate"
                         style="@style/Hyperlink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -201,7 +201,6 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lin_btnsearch"
             android:layout_width="match_parent"
@@ -210,15 +209,17 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/blueish"
                 android:text="Search"
-                android:textSize="20sp"
-                android:id="@+id/btn_search"/>
+                android:textSize="20sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -231,24 +232,30 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:id="@+id/tbl_header">
-            <TableRow android:background="#0079D6" android:padding="5dp">
+            <TableRow android:background="#0079D6"
+                android:padding="5dp"
+                android:layout_margin="2dp"
+                android:weightSum="3">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Sl.No."
+                    android:textSize="25sp"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Date"
+                    android:text="Fosol Name"
+                    android:textSize="25sp"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Quantity"
+                    android:textSize="25sp"
                     android:textAlignment="center"/>
             </TableRow>
         </TableLayout>
@@ -256,13 +263,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_below="@id/tbl_header">
+            android:layout_below="@id/tbl_header"
+            android:layout_above="@id/lin_btnsave">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rec_entry_report"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lin_btnsave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/blueish"
+                android:text="Data Save"
+                android:textSize="20sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </RelativeLayout>
 

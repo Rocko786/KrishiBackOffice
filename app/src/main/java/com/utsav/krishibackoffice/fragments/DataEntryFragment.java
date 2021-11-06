@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -40,15 +41,22 @@ import com.utsav.krishibackoffice.ViewModel.VegSubCategoryViewModel;
 import com.utsav.krishibackoffice.ViewModel.VegTypeViewModel;
 import com.utsav.krishibackoffice.ViewModel.VegViewModel;
 import com.utsav.krishibackoffice.activities.MainActivity;
+import com.utsav.krishibackoffice.adapters.DataEntryAdapter;
 import com.utsav.krishibackoffice.adapters.DataEntryReportAdapter;
 import com.utsav.krishibackoffice.models.DataEntryModel;
 import com.utsav.krishibackoffice.models.UserModel;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,8 +65,7 @@ import java.util.List;
  */
 public class DataEntryFragment extends Fragment {
     MainActivity mainActivity;
-    String todateindicator="",fromdateindicator="";
-    String txtFromdate="",txtTodate="";
+    String txtselectDate="";
     DatePickerDialog datePickerDialog;
     ClimateViewModel climateViewModel;
     VegTypeViewModel vegTypeViewModel;
@@ -72,8 +79,8 @@ public class DataEntryFragment extends Fragment {
     Spinner spn_FasolName;
     Spinner spn_FasolAbstha;
     Spinner spn_FasolJat;
-    Spinner spn_Fasol;
-    AppCompatButton btn_search;
+    AppCompatButton btn_search,btn_save;
+    AppCompatTextView txt_selectdate;
     RelativeLayout rel_search,rel_report;
     RecyclerView rec_entry_report;
 
@@ -81,7 +88,7 @@ public class DataEntryFragment extends Fragment {
     UserModel user;
     int UserId;
 
-    DataEntryReportAdapter dataEntryReportAdapter;
+    DataEntryAdapter dataEntryAdapter;
 
     ArrayList<ClimateListModel> climateListModelArrayList = new ArrayList<>();
     ArrayList<VegCategoryListModel> vegCategoryListModelArrayList = new ArrayList<>();
@@ -98,7 +105,6 @@ public class DataEntryFragment extends Fragment {
     ArrayAdapter<VegSubCategoryListModel> vegSubCategoryListModelArrayAdapter;
 
     ArrayList<VegListModel> vegListModelArrayList = new ArrayList<>();
-    ArrayAdapter<VegListModel> vegListModelArrayAdapter;
     int ClimateId=0;
     int VegTypeId=0,VegCategoryId=0,VegPhaseId=0,VegSubCategoryId=0,VegId=0;
 
@@ -123,18 +129,24 @@ public class DataEntryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_data_entry, container, false);
         instance(view);
-        //clickevent();
+        clickevent();
         return view;
     }
 
     private void clickevent() {
 
+        txt_selectdate.setOnClickListener(v -> {
+            setupSelectDate();
+        });
 
         btn_search.setOnClickListener(view -> {
             validfields();
         });
-
+        btn_save.setOnClickListener(v -> {
+            saveEntryData();
+        });
     }
+
     private void validfields() {
         if(ClimateId==0){
             showAlertMessage("Please Select Climate");
@@ -151,81 +163,37 @@ public class DataEntryFragment extends Fragment {
         else  if(VegSubCategoryId==0){
             showAlertMessage("Please Select VegSubCategory");
         }
-        else  if(VegId==0){
-            showAlertMessage("Please Select Veg");
-        }
         else {
             getAllReports();
         }
 
     }
+
     private void getAllReports() {
-        if(txtFromdate.equals("")){
-            txtFromdate="NULL";
-        }
-
-        if(txtTodate.equals("")){
-            txtTodate="NULL";
-        }
-        try{
-            dataEntryReportListModelArrayList.clear();
-            JSONObject model = new JSONObject();
-            model.put("FromDate", txtFromdate);
-            model.put("ToDate", txtTodate);
-            model.put("ClimateId", ClimateId);
-            model.put("VegPhaseId", VegPhaseId);
-            model.put("VegCategoryId", VegCategoryId);
-            model.put("VegTypeId", VegTypeId);
-            model.put("VegSubCategoryId", VegSubCategoryId);
-            model.put("VegId", VegId);
-            model.put("UserId", UserId);
-
-            DataEntryModel entrymodel;
-            entrymodel=new DataEntryModel(txtFromdate,txtTodate,ClimateId,VegPhaseId,VegCategoryId,VegTypeId,VegSubCategoryId,VegId,UserId);
-
-            dataEntryReportViewModel= ViewModelProviders.of(this).get(DataEntryReportViewModel.class);
-            dataEntryReportViewModel.getDataEntryReportGetAll(entrymodel).observe(mainActivity, datareports -> {
-                List<DataEntryReportListModel> dataEntryReportListModels = datareports.getDataEntryReportListModels();
-                dataEntryReportListModelArrayList.addAll(dataEntryReportListModels);
-                // dataEntryReportAdapter.notifyDataSetChanged();
-                if(dataEntryReportListModelArrayList.size() > 0){
-                    rel_search.setVisibility(View.GONE);
-                    rel_report.setVisibility(View.VISIBLE);
-                    setupRecyclerView();
-
-                }
-                else {
-                    showAlertMessage("Data Not Found");
-                    rel_search.setVisibility(View.VISIBLE);
-                    rel_report.setVisibility(View.GONE);
-                }
-            });
-
-
-
-        }
-        catch (Exception ex){
-            showAlertMessage(ex.getMessage());
-        }
-        finally {
-
-        }
+        bindVeg(VegCategoryId,VegSubCategoryId);
     }
 
+
     private void setupRecyclerView() {
-        if (dataEntryReportAdapter == null) {
-            dataEntryReportAdapter = new DataEntryReportAdapter(mainActivity, dataEntryReportListModelArrayList);
+        if (dataEntryAdapter == null) {
+            dataEntryAdapter = new DataEntryAdapter(mainActivity, vegListModelArrayList);
             rec_entry_report.setLayoutManager(new LinearLayoutManager(mainActivity));
-            rec_entry_report.setAdapter(dataEntryReportAdapter);
+            rec_entry_report.setAdapter(dataEntryAdapter);
             rec_entry_report.setItemAnimator(new DefaultItemAnimator());
             rec_entry_report.setNestedScrollingEnabled(true);
         } else {
-            dataEntryReportAdapter.notifyDataSetChanged();
+            dataEntryAdapter.notifyDataSetChanged();
         }
     }
 
     private void showAlertMessage(String msg){
-        AlertDialog.Builder builder
+
+        new SweetAlertDialog(mainActivity, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Oops...")
+                .setContentText(msg)
+                .show();
+
+        /*AlertDialog.Builder builder
                 = new AlertDialog
                 .Builder(mainActivity);
         builder.setMessage(msg);
@@ -242,12 +210,11 @@ public class DataEntryFragment extends Fragment {
                     }
                 });
         AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        alertDialog.show();*/
     }
 
 
-/*
-    private void setupFromDate() {
+    private void setupSelectDate() {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
@@ -257,15 +224,14 @@ public class DataEntryFragment extends Fragment {
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear, int dayOfMonth) {
                 // set day of month , month and year value in the edit text
-                String setFromDate=(dayOfMonth + "/"
+                String setDate=(dayOfMonth + "/"
                         + (monthOfYear + 1) + "/" + year);
-                txt_fromdate.setText(setFromDate);
-                txtFromdate=setFromDate;
+                txt_selectdate.setText(setDate);
+                txtselectDate=setDate;
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
-*/
     private void instance(View view) {
         mainActivity=(MainActivity)getActivity();
         localStorage = new LocalStorage(mainActivity);
@@ -276,23 +242,35 @@ public class DataEntryFragment extends Fragment {
             UserId=user.getUserId();
         }
 
-       /* txt_fromdate=view.findViewById(R.id.txt_fromdate);
-        txt_todate=view.findViewById(R.id.txt_todate);*/
+        txt_selectdate=view.findViewById(R.id.txt_selectdate);
         spn_mosum=view.findViewById(R.id.spn_mosum);
         spn_FasolProkar=view.findViewById(R.id.spn_FasolProkar);
         spn_FasolName=view.findViewById(R.id.spn_FasolName);
         spn_FasolAbstha=view.findViewById(R.id.spn_FasolAbstha);
         spn_FasolJat=view.findViewById(R.id.spn_FasolJat);
-        spn_Fasol=view.findViewById(R.id.spn_Fasol);
         btn_search=view.findViewById(R.id.btn_search);
+        btn_save=view.findViewById(R.id.btn_save);
         rel_report=view.findViewById(R.id.rel_report);
         rel_search=view.findViewById(R.id.rel_search);
-       // rec_entry_report=view.findViewById(R.id.rec_entry_report);
+        rec_entry_report=view.findViewById(R.id.rec_entry_report);
+        setTodate();
         bindClimates();
         bindVegType();
-        //   bindVegCategory(ClimateId,VegTypeId);
+
 
     }
+    private void setTodate(){
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String todate = df.format(c);
+        txt_selectdate.setText(todate);
+        txtselectDate=todate;
+    }
+
+
+
+
     private void bindClimates() {
         climateListModelArrayList.clear();
         try {
@@ -489,47 +467,81 @@ public class DataEntryFragment extends Fragment {
     }
     private void getSelectedVegSubCategory(VegSubCategoryListModel vegSubCategoryListModel) {
         VegSubCategoryId=vegSubCategoryListModel.getVegSubCategoryId();
-        bindVeg(VegCategoryId,VegSubCategoryId);
     }
-
     private void bindVeg(int VegCategoryId, int VegSubCategoryId) {
         vegListModelArrayList.clear();
         try {
             vegViewModel = ViewModelProviders.of(this).get(VegViewModel.class);
-            vegViewModel.getVegRepository(VegCategoryId,VegSubCategoryId).observe(mainActivity,vegResponse -> {
+            vegViewModel.getVegForDataRepository(VegCategoryId,VegSubCategoryId).observe(mainActivity,vegResponse -> {
                 List<VegListModel> veg = vegResponse.getVegList();
                 vegListModelArrayList.addAll(veg);
-                setupVeg(vegListModelArrayList);
+                if(vegListModelArrayList.size() > 0){
+                    rel_search.setVisibility(View.GONE);
+                    rel_report.setVisibility(View.VISIBLE);
+                    setupRecyclerView();
+
+                }
+                else {
+                    showAlertMessage("Data Not Found");
+                    rel_search.setVisibility(View.VISIBLE);
+                    rel_report.setVisibility(View.GONE);
+                }
             });
         }
         catch (Exception ex){
-
+            showAlertMessage(ex.getMessage());
         }
         finally {
 
         }
     }
-    private void setupVeg(ArrayList<VegListModel> vegListModelArrayList) {
-        vegListModelArrayAdapter = new ArrayAdapter<>(mainActivity, android.R.layout.simple_spinner_item, vegListModelArrayList);
-        vegListModelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_Fasol.setAdapter(vegListModelArrayAdapter);
-        spn_Fasol.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getSelectedVeg(vegListModelArrayList.get(position));
-            }
+    private void saveEntryData()  {
+        try {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+            DataEntryModel entrymodel;
+            entrymodel=new DataEntryModel(txtselectDate,ClimateId,VegPhaseId,VegCategoryId,VegTypeId,VegSubCategoryId,UserId,vegListModelArrayList);
+
+            dataEntryReportViewModel = ViewModelProviders.of(this).get(DataEntryReportViewModel.class);
+            dataEntryReportViewModel.entryDataSave(entrymodel).observe(mainActivity,dataEntryReportResponse -> {
+                int VegDataId = dataEntryReportResponse.getVegDataId();
+                String Msg=dataEntryReportResponse.getMsg();
+                if(VegDataId==0){
+                    errorDialogMsg(Msg);
+                }
+                else {
+                   successDialogMsg(Msg);
+                    rel_search.setVisibility(View.VISIBLE);
+                    rel_report.setVisibility(View.GONE);
+                }
+
+            });
+
+
+        }
+        catch (Exception ex){
+            errorDialogMsg(ex.getMessage());
+        }
+        finally {
+
+        }
+
+
     }
-    private void getSelectedVeg(VegListModel vegListModel) {
-        VegId=vegListModel.getVegId();
 
 
+    public void errorDialogMsg(String msg) {
+        new SweetAlertDialog(mainActivity, SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...")
+                .setContentText(msg)
+                .show();
+    }
+
+    private void successDialogMsg(String msg) {
+        new SweetAlertDialog(mainActivity, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Success")
+                .setContentText(msg)
+                .show();
     }
 
 

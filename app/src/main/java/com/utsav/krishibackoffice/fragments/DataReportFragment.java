@@ -21,12 +21,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import com.utsav.krishibackoffice.Model.ClimateListModel;
 import com.utsav.krishibackoffice.Model.DataEntryReportListModel;
 import com.utsav.krishibackoffice.Model.VegCategoryListModel;
@@ -56,6 +58,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DataReportFragment#newInstance} factory method to
@@ -80,10 +84,10 @@ public class DataReportFragment extends Fragment {
     Spinner spn_FasolAbstha;
     Spinner spn_FasolJat;
     Spinner spn_Fasol;
-    AppCompatButton btn_search;
+    AppCompatButton btn_search,btn_back;
     RelativeLayout rel_search,rel_report;
     RecyclerView rec_entry_report;
-
+    ProgressBar pro_cir;
     LocalStorage localStorage;
     UserModel user;
     int UserId;
@@ -147,8 +151,17 @@ public class DataReportFragment extends Fragment {
         btn_search.setOnClickListener(view -> {
             validfields();
         });
+        btn_back.setOnClickListener(view -> {
+            backAllOptions();
+        });
 
     }
+
+    private void backAllOptions() {
+        rel_search.setVisibility(View.VISIBLE);
+        rel_report.setVisibility(View.GONE);
+    }
+
     private void validfields() {
             if(ClimateId==0){
                 showAlertMessage("Please Select Climate");
@@ -239,27 +252,11 @@ public class DataReportFragment extends Fragment {
     }
 
     private void showAlertMessage(String msg){
-        AlertDialog.Builder builder
-                = new AlertDialog
-                .Builder(mainActivity);
-        builder.setMessage(msg);
-        builder.setTitle("Alert !");
-        builder.setCancelable(false);
-        builder.setPositiveButton("OK",
-                        new DialogInterface
-                                .OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog,
-                                                int which)
-                            {
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        new SweetAlertDialog(mainActivity, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Oops...")
+                .setContentText(msg)
+                .show();
     }
-
-
     private void setupFromDate() {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
@@ -315,6 +312,7 @@ public class DataReportFragment extends Fragment {
         spn_FasolJat=view.findViewById(R.id.spn_FasolJat);
         spn_Fasol=view.findViewById(R.id.spn_Fasol);
         btn_search=view.findViewById(R.id.btn_search);
+        btn_back=view.findViewById(R.id.btn_back);
         rel_report=view.findViewById(R.id.rel_report);
         rel_search=view.findViewById(R.id.rel_search);
         rec_entry_report=view.findViewById(R.id.rec_entry_report);

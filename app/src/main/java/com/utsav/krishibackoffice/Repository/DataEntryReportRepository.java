@@ -48,6 +48,28 @@ public class DataEntryReportRepository {
         return useData;
     }
 
+    public MutableLiveData<DataEntryReportResponse> entryDataSave(DataEntryModel model){
+
+
+        MutableLiveData<DataEntryReportResponse> useData = new MutableLiveData<>();
+        krishiApi.dataEntrySave(model).enqueue(new Callback<DataEntryReportResponse>() {
+            @Override
+            public void onResponse(Call<DataEntryReportResponse> call,
+                                   Response<DataEntryReportResponse> response) {
+                if (response.isSuccessful()){
+                    useData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataEntryReportResponse> call, Throwable t) {
+                useData.setValue(null);
+            }
+        });
+        return useData;
+    }
+
+
 
 
 }

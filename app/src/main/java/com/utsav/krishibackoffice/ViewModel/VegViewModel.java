@@ -21,4 +21,15 @@ public class VegViewModel extends ViewModel {
         vegResponseMutableLiveData = vegRepository.getVeg(VegCategoryId,VegSubCategoryId);
         return vegResponseMutableLiveData;
     }
+
+    public LiveData<VegResponse> getVegForDataRepository(int VegCategoryId, int VegSubCategoryId) {
+        vegResponseMutableLiveData=null;
+        if (vegResponseMutableLiveData != null) {
+            return vegResponseMutableLiveData;
+        }
+        vegRepository = VegRepository.getInstance();
+        vegResponseMutableLiveData = vegRepository.getVegForData(VegCategoryId,VegSubCategoryId);
+        return vegResponseMutableLiveData;
+    }
+
 }

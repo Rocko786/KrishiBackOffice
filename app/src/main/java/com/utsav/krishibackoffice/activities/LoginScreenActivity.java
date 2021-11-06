@@ -28,7 +28,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     UserModel userModel;
     int UserId=0,UserTypeId;
 
-    String Username,UserContact,UserCode,Email,UserType,UserImage;
+    String Username,UserContact,UserCode,Email,UserType,UserImage,BlockName;
 
     ProgressDialog progressDialog;
     LocalStorage localStorage;
@@ -89,8 +89,9 @@ public class LoginScreenActivity extends AppCompatActivity {
              UserCode=userResponse.getUserCode();
              UserImage=userResponse.getUserImage();
              UserType=userResponse.getUserType();
+             BlockName=userResponse.getBlockName();
 
-             userModel=new UserModel(UserId,Username,UserContact,Email,UserTypeId,UserCode,UserImage,UserType);
+             userModel=new UserModel(UserId,Username,UserContact,Email,UserTypeId,UserCode,UserImage,UserType,BlockName);
 
             if(UserId!=0){
                // progressDialog.dismiss();

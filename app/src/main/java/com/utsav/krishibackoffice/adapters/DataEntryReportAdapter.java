@@ -34,7 +34,8 @@ public class DataEntryReportAdapter extends RecyclerView.Adapter<DataEntryReport
 
     @Override
     public void onBindViewHolder(@NonNull DataEntryReportAdapter.DataEntryReportViewHolder holder, int position) {
-       // holder.txt_serial.setText(position + 1);
+       /* int count=position+1;
+        holder.txt_serial.setText(count);*/
         holder.txt_date.setText(datareports.get(position).getVegDateModify());
         holder.txt_quan.setText(datareports.get(position).getQuantity());
 

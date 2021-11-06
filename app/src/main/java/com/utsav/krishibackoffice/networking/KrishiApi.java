@@ -9,6 +9,7 @@ import com.utsav.krishibackoffice.Response.VegPhaseResponse;
 import com.utsav.krishibackoffice.Response.VegResponse;
 import com.utsav.krishibackoffice.Response.VegSubCategoryResponse;
 import com.utsav.krishibackoffice.Response.VegTypeResponse;
+import com.utsav.krishibackoffice.models.DataEntryModel;
 
 import java.util.HashMap;
 
@@ -43,6 +44,9 @@ public interface KrishiApi {
     @GET("KrishiDataSave/BindVeg")
     Call<VegResponse> getVeg(@Query("VegCategoryId") int VegCategoryId,
                              @Query("VegSubCategoryId") int VegSubCategoryId);
+    @GET("KrishiDataSave/BindVegForDataSave")
+    Call<VegResponse> getVegForDataSave(@Query("VegCategoryId") int VegCategoryId,
+                             @Query("VegSubCategoryId") int VegSubCategoryId);
 
 
     @GET("KrishiDataSave/GetAllReport")
@@ -55,4 +59,8 @@ public interface KrishiApi {
                                                            @Query("VegSubCategoryId") int VegSubCategoryId,
                                                            @Query("VegId") int VegId,
                                                            @Query("UserId") int UserId);
+
+
+    @POST("KrishiDataSave/SaveData")
+    Call<DataEntryReportResponse> dataEntrySave(@Body DataEntryModel body);
 }
