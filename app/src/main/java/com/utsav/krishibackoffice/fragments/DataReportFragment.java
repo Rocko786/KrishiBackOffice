@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -67,6 +68,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 public class DataReportFragment extends Fragment {
     AppCompatTextView txt_fromdate,txt_todate;
+    LinearLayoutCompat lin_pro;
     MainActivity mainActivity;
     String todateindicator="",fromdateindicator="";
     String txtFromdate="",txtTodate="";
@@ -195,23 +197,14 @@ public class DataReportFragment extends Fragment {
             txtTodate="NULL";
         }
         try{
+            setProgressbar(1);
             dataEntryReportListModelArrayList.clear();
-            JSONObject model = new JSONObject();
-            model.put("FromDate", txtFromdate);
-            model.put("ToDate", txtTodate);
-            model.put("ClimateId", ClimateId);
-            model.put("VegPhaseId", VegPhaseId);
-            model.put("VegCategoryId", VegCategoryId);
-            model.put("VegTypeId", VegTypeId);
-            model.put("VegSubCategoryId", VegSubCategoryId);
-            model.put("VegId", VegId);
-            model.put("UserId", UserId);
-
             DataEntryModel entrymodel;
             entrymodel=new DataEntryModel(txtFromdate,txtTodate,ClimateId,VegPhaseId,VegCategoryId,VegTypeId,VegSubCategoryId,VegId,UserId);
 
                  dataEntryReportViewModel=ViewModelProviders.of(this).get(DataEntryReportViewModel.class);
                 dataEntryReportViewModel.getDataEntryReportGetAll(entrymodel).observe(mainActivity, datareports -> {
+                    setProgressbar(0);
                 List<DataEntryReportListModel> dataEntryReportListModels = datareports.getDataEntryReportListModels();
                 dataEntryReportListModelArrayList.addAll(dataEntryReportListModels);
                    // dataEntryReportAdapter.notifyDataSetChanged();
@@ -222,6 +215,7 @@ public class DataReportFragment extends Fragment {
 
                     }
                     else {
+                        setProgressbar(0);
                         showAlertMessage("Data Not Found");
                         rel_search.setVisibility(View.VISIBLE);
                         rel_report.setVisibility(View.GONE);
@@ -232,10 +226,11 @@ public class DataReportFragment extends Fragment {
 
         }
         catch (Exception ex){
+            setProgressbar(0);
             showAlertMessage(ex.getMessage());
         }
         finally {
-
+            setProgressbar(0);
         }
     }
 
@@ -316,30 +311,46 @@ public class DataReportFragment extends Fragment {
         rel_report=view.findViewById(R.id.rel_report);
         rel_search=view.findViewById(R.id.rel_search);
         rec_entry_report=view.findViewById(R.id.rec_entry_report);
+        pro_cir=view.findViewById(R.id.pro_cir);
+        lin_pro=view.findViewById(R.id.lin_pro);
         bindClimates();
         bindVegType();
      //   bindVegCategory(ClimateId,VegTypeId);
 
     }
+
+    private void setProgressbar(int check){
+        if(check==1){
+            pro_cir.getProgress();
+            lin_pro.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            lin_pro.setVisibility(View.GONE);
+        }
+    }
     private void bindClimates() {
+        setProgressbar(1);
         climateListModelArrayList.clear();
         try {
             climateViewModel = ViewModelProviders.of(this).get(ClimateViewModel.class);
             climateViewModel.getClimates();
             climateViewModel.getClimateRepository().observe(mainActivity,climateReponse -> {
+
                 List<ClimateListModel> climates = climateReponse.getClimates();
                 climateListModelArrayList.addAll(climates);
                 setupClimate(climateListModelArrayList);
             });
         }
         catch (Exception ex){
-
+            setProgressbar(0);
         }
         finally {
-
+            setProgressbar(0);
         }
     }
     private void setupClimate(ArrayList<ClimateListModel> climateListModelArrayList) {
+        setProgressbar(0);
         climateListModelArrayAdapter = new ArrayAdapter<>(mainActivity, android.R.layout.simple_spinner_item, climateListModelArrayList);
         climateListModelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_mosum.setAdapter(climateListModelArrayAdapter);
@@ -347,6 +358,7 @@ public class DataReportFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(climateListModelArrayList!=null)
                 getSelectedClimate(climateListModelArrayList.get(position));
             }
 
@@ -361,21 +373,23 @@ public class DataReportFragment extends Fragment {
         //bindVegCategory(ClimateId,VegTypeId);
     }
     private void bindVegType() {
+        setProgressbar(1);
         vegTypeListModelArrayList.clear();
         try {
             vegTypeViewModel = ViewModelProviders.of(this).get(VegTypeViewModel.class);
             vegTypeViewModel.getVegType();
             vegTypeViewModel.getVegTypeRepository().observe(mainActivity,vegTypeReponse -> {
+                setProgressbar(0);
                 List<VegTypeListModel> vegType = vegTypeReponse.getVegType();
                 vegTypeListModelArrayList.addAll(vegType);
                 setupVegType(vegTypeListModelArrayList);
             });
         }
         catch (Exception ex){
-
+            setProgressbar(0);
         }
         finally {
-
+            setProgressbar(0);
         }
     }
     private void setupVegType(ArrayList<VegTypeListModel> vegTypeListModelArrayList) {
@@ -386,6 +400,7 @@ public class DataReportFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegTypeListModelArrayList!=null)
                 getSelectedVegType(vegTypeListModelArrayList.get(position));
             }
 
@@ -401,20 +416,22 @@ public class DataReportFragment extends Fragment {
     }
 
     private void bindVegCategory(int ClimateId, int VegTypeId) {
+        setProgressbar(1);
         vegCategoryListModelArrayList.clear();
         try {
             vegCategoryViewModel = ViewModelProviders.of(this).get(VegCategoryViewModel.class);
             vegCategoryViewModel.getVegCategoryRepository(ClimateId,VegTypeId).observe(mainActivity,vegCategoryResponse -> {
+                setProgressbar(0);
                 List<VegCategoryListModel> vegCategories = vegCategoryResponse.getVegCategoryList();
                 vegCategoryListModelArrayList.addAll(vegCategories);
                 setupVegCategory(vegCategoryListModelArrayList);
             });
         }
         catch (Exception ex){
-
+            setProgressbar(0);
         }
         finally {
-
+            setProgressbar(0);
         }
     }
     private void setupVegCategory(ArrayList<VegCategoryListModel> vegCategoryListModelArrayList) {
@@ -425,6 +442,7 @@ public class DataReportFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegCategoryListModelArrayList!=null)
                 getSelectedVegCategory(vegCategoryListModelArrayList.get(position));
             }
 
@@ -444,20 +462,22 @@ public class DataReportFragment extends Fragment {
     }
 
     private void bindVegPhase(int VegCategoryId) {
+        setProgressbar(1);
         vegPhaseListModelArrayList.clear();
         try {
             vegPhaseViewModel = ViewModelProviders.of(this).get(VegPhaseViewModel.class);
             vegPhaseViewModel.getVegPhaseRepository(VegCategoryId).observe(mainActivity,vegPhaseResponse -> {
+                setProgressbar(0);
                 List<VegPhaseListModel> vegPhase = vegPhaseResponse.getVegPhaseList();
                 vegPhaseListModelArrayList.addAll(vegPhase);
                 setupVegPhase(vegPhaseListModelArrayList);
             });
         }
         catch (Exception ex){
-
+            setProgressbar(0);
         }
         finally {
-
+            setProgressbar(0);
         }
     }
     private void setupVegPhase(ArrayList<VegPhaseListModel> vegPhaseListModelArrayList) {
@@ -468,6 +488,7 @@ public class DataReportFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegPhaseListModelArrayList!=null)
                 getSelectedVegPhase(vegPhaseListModelArrayList.get(position));
             }
 
@@ -482,20 +503,22 @@ public class DataReportFragment extends Fragment {
     }
 
     private void bindVegSubCategory(int VegCategoryId) {
+        setProgressbar(1);
         vegSubCategoryListModelArrayList.clear();
         try {
             vegSubCategoryViewModel = ViewModelProviders.of(this).get(VegSubCategoryViewModel.class);
             vegSubCategoryViewModel.getVegSubCategoryRepository(VegCategoryId).observe(mainActivity,vegSubCategoryResponse -> {
+                setProgressbar(0);
                 List<VegSubCategoryListModel> vegSubCategory = vegSubCategoryResponse.getVegSubCategoryList();
                 vegSubCategoryListModelArrayList.addAll(vegSubCategory);
                 setupVegSubCategory(vegSubCategoryListModelArrayList);
             });
         }
         catch (Exception ex){
-
+            setProgressbar(0);
         }
         finally {
-
+            setProgressbar(0);
         }
     }
     private void setupVegSubCategory(ArrayList<VegSubCategoryListModel> vegSubCategoryListModelArrayList) {
@@ -506,6 +529,7 @@ public class DataReportFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegSubCategoryListModelArrayList!=null)
                 getSelectedVegSubCategory(vegSubCategoryListModelArrayList.get(position));
             }
 
@@ -521,20 +545,22 @@ public class DataReportFragment extends Fragment {
     }
 
     private void bindVeg(int VegCategoryId, int VegSubCategoryId) {
+        setProgressbar(1);
         vegListModelArrayList.clear();
         try {
             vegViewModel = ViewModelProviders.of(this).get(VegViewModel.class);
             vegViewModel.getVegRepository(VegCategoryId,VegSubCategoryId).observe(mainActivity,vegResponse -> {
+                setProgressbar(0);
                 List<VegListModel> veg = vegResponse.getVegList();
                 vegListModelArrayList.addAll(veg);
                 setupVeg(vegListModelArrayList);
             });
         }
         catch (Exception ex){
-
+            setProgressbar(0);
         }
         finally {
-
+            setProgressbar(0);
         }
     }
     private void setupVeg(ArrayList<VegListModel> vegListModelArrayList) {
@@ -545,6 +571,7 @@ public class DataReportFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegListModelArrayList!=null)
                 getSelectedVeg(vegListModelArrayList.get(position));
             }
 

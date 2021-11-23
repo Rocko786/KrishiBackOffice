@@ -297,6 +297,7 @@ public class DataEntryFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(climateListModelArrayList!=null)
                 getSelectedClimate(climateListModelArrayList.get(position));
             }
 
@@ -307,9 +308,11 @@ public class DataEntryFragment extends Fragment {
         });
     }
     private void getSelectedClimate(ClimateListModel climateListModel) {
+
         ClimateId=climateListModel.getClimateId();
         bindVegCategory(ClimateId,VegTypeId);
     }
+
     private void bindVegType() {
         vegTypeListModelArrayList.clear();
         try {
@@ -336,6 +339,7 @@ public class DataEntryFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegTypeListModelArrayList!=null)
                 getSelectedVegType(vegTypeListModelArrayList.get(position));
             }
 
@@ -375,6 +379,7 @@ public class DataEntryFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegCategoryListModelArrayList!=null)
                 getSelectedVegCategory(vegCategoryListModelArrayList.get(position));
             }
 
@@ -418,6 +423,7 @@ public class DataEntryFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegPhaseListModelArrayList!=null)
                 getSelectedVegPhase(vegPhaseListModelArrayList.get(position));
             }
 
@@ -428,6 +434,7 @@ public class DataEntryFragment extends Fragment {
         });
     }
     private void getSelectedVegPhase(VegPhaseListModel vegPhaseListModel) {
+
         VegPhaseId=vegPhaseListModel.getVegPhaseId();
     }
 
@@ -456,6 +463,7 @@ public class DataEntryFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(vegSubCategoryListModelArrayList!=null)
                 getSelectedVegSubCategory(vegSubCategoryListModelArrayList.get(position));
             }
 
@@ -466,8 +474,10 @@ public class DataEntryFragment extends Fragment {
         });
     }
     private void getSelectedVegSubCategory(VegSubCategoryListModel vegSubCategoryListModel) {
+        if(vegSubCategoryListModel!=null)
         VegSubCategoryId=vegSubCategoryListModel.getVegSubCategoryId();
     }
+
     private void bindVeg(int VegCategoryId, int VegSubCategoryId) {
         vegListModelArrayList.clear();
         try {
@@ -495,7 +505,6 @@ public class DataEntryFragment extends Fragment {
 
         }
     }
-
     private void saveEntryData()  {
         try {
 
@@ -529,8 +538,6 @@ public class DataEntryFragment extends Fragment {
 
 
     }
-
-
     public void errorDialogMsg(String msg) {
         new SweetAlertDialog(mainActivity, SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...")
                 .setContentText(msg)

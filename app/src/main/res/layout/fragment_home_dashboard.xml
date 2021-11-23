@@ -35,7 +35,7 @@
                     android:fontFamily="@font/bariol_bold"
                     android:text="User Name"
                     android:textColor="@color/color_username"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/txt_username">
 
 
@@ -45,9 +45,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/bariol_bold"
-                    android:text=""
+                    android:text="Block Name"
                     android:textColor="@color/color_usercontact"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:id="@+id/txt_blockname">
 
 

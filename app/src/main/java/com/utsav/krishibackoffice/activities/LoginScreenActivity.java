@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,8 @@ public class LoginScreenActivity extends AppCompatActivity {
     UserViewModel userViewModel;
     UserModel userModel;
     int UserId=0,UserTypeId;
+    RelativeLayout relative_btn,relative_pro;
+    ProgressBar pro_cir;
 
     String Username,UserContact,UserCode,Email,UserType,UserImage,BlockName;
 
@@ -54,11 +59,16 @@ public class LoginScreenActivity extends AppCompatActivity {
         edit_usercode=findViewById(R.id.edit_usercode);
         edit_password=findViewById(R.id.edit_password);
         btn_login=findViewById(R.id.btn_login);
-        progressDialog=new ProgressDialog(getApplicationContext());
+        relative_pro=findViewById(R.id.relative_pro);
+        relative_btn=findViewById(R.id.relative_btn);
+        pro_cir=findViewById(R.id.pro_cir);
+
+
+        /*progressDialog=new ProgressDialog(getApplicationContext());
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("ProgressDialog"); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(false);*/
     }
     private void validFields()
     {
@@ -74,13 +84,25 @@ public class LoginScreenActivity extends AppCompatActivity {
             dologin();
         }
     }
+    private void setprogessbarVisibilty(Boolean check){
+        if(check==true){
+            pro_cir.getProgress();
+            relative_btn.setVisibility(View.GONE);
+            relative_pro.setVisibility(View.VISIBLE);
+        }
+        else {
+            relative_btn.setVisibility(View.VISIBLE);
+            relative_pro.setVisibility(View.GONE);
+        }
+    }
 
     private void dologin() {
-       // progressDialog.show();
+        setprogessbarVisibilty(true);
         try{
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel.userlogin(usercode,userpassword);
         userViewModel.getUserRepository().observe(this, userResponse -> {
+
              UserId=userResponse.getUserId();
              Username=userResponse.getUserName();
              UserContact=userResponse.getContactNo();
@@ -90,11 +112,10 @@ public class LoginScreenActivity extends AppCompatActivity {
              UserImage=userResponse.getUserImage();
              UserType=userResponse.getUserType();
              BlockName=userResponse.getBlockName();
-
              userModel=new UserModel(UserId,Username,UserContact,Email,UserTypeId,UserCode,UserImage,UserType,BlockName);
 
             if(UserId!=0){
-               // progressDialog.dismiss();
+              //  setprogessbarVisibilty(false);
 
                 Gson gson = new Gson();
                 String userString = gson.toJson(userModel);
@@ -104,18 +125,18 @@ public class LoginScreenActivity extends AppCompatActivity {
                 finish();
             }
             else {
-               // progressDialog.dismiss();
+                setprogessbarVisibilty(false);
                 Toast.makeText(getApplicationContext(),"User not found ",Toast.LENGTH_LONG).show();
             }
 
         });
         }
         catch (Exception ex){
-            //progressDialog.dismiss();
+            setprogessbarVisibilty(false);
             Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
         }
         finally {
-           // progressDialog.dismiss();
+            //setprogessbarVisibilty(false);
         }
 
 

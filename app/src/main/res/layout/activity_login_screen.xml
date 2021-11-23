@@ -117,7 +117,30 @@
         <RelativeLayout
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_back">
+            android:id="@+id/relative_pro"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                style="@style/Widget.AppCompat.Spinner"
+                android:progress="80"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_centerInParent="true"
+                android:visibility="visible"
+                android:id="@+id/pro_cir"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_back"
+            android:visibility="visible"
+            android:id="@+id/relative_btn">
 
             <TextView
                 android:id="@+id/btn_login"
@@ -128,14 +151,15 @@
                 android:gravity="center"
                 android:text="SIGNIN"
                 android:textColor="#fff"
-                android:textSize="22dp" />
+                android:textSize="22dp"
+                android:visibility="visible"/>
 
         </RelativeLayout>
     </LinearLayout>
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="155dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home_logo"
