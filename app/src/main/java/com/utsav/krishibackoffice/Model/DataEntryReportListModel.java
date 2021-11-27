@@ -12,6 +12,18 @@ public class DataEntryReportListModel {
     @Expose
     private String Quantity;
 
+    @SerializedName("VegName")
+    @Expose
+    private String VegName;
+
+    public String getVegName() {
+        return VegName;
+    }
+
+    public void setVegName(String vegName) {
+        VegName = vegName;
+    }
+
     public String getVegDateModify() {
         return VegDateModify;
     }

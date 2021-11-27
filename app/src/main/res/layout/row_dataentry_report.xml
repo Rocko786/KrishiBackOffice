@@ -11,12 +11,16 @@
         android:visibility="visible"
         android:id="@+id/rel_report">
 
-        <TableLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TableRow android:background="#DAE8FC"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#DAE8FC"
                 android:padding="5dp"
-                android:weightSum="3">
+                android:weightSum="4">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -28,6 +32,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Hira 1"
+                    android:textAlignment="center"
+                    android:id="@+id/txt_fosolname"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="03/11/2021"
                     android:textAlignment="center"
                     android:id="@+id/txt_date"/>
@@ -35,11 +46,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="5"
+                    android:text="10"
                     android:textAlignment="center"
                     android:id="@+id/txt_quan"/>
-            </TableRow>
-        </TableLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </RelativeLayout>
 

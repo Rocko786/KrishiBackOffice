@@ -34,10 +34,11 @@ public class DataEntryReportAdapter extends RecyclerView.Adapter<DataEntryReport
 
     @Override
     public void onBindViewHolder(@NonNull DataEntryReportAdapter.DataEntryReportViewHolder holder, int position) {
-       /* int count=position+1;
-        holder.txt_serial.setText(count);*/
+        int count=position+1;
+        holder.txt_serial.setText(Integer.toString(count));
         holder.txt_date.setText(datareports.get(position).getVegDateModify());
         holder.txt_quan.setText(datareports.get(position).getQuantity());
+        holder.txt_fosolname.setText(datareports.get(position).getVegName());
 
     }
 
@@ -48,7 +49,7 @@ public class DataEntryReportAdapter extends RecyclerView.Adapter<DataEntryReport
 
     public class DataEntryReportViewHolder extends RecyclerView.ViewHolder{
 
-        TextView txt_serial,txt_date,txt_quan;
+        TextView txt_serial,txt_date,txt_quan,txt_fosolname;
 
 
 
@@ -58,6 +59,7 @@ public class DataEntryReportAdapter extends RecyclerView.Adapter<DataEntryReport
             txt_serial = itemView.findViewById(R.id.txt_serial);
             txt_date = itemView.findViewById(R.id.txt_date);
             txt_quan = itemView.findViewById(R.id.txt_quan);
+            txt_fosolname=itemView.findViewById(R.id.txt_fosolname);
 
         }
     }

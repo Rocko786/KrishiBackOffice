@@ -33,7 +33,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     RelativeLayout relative_btn,relative_pro;
     ProgressBar pro_cir;
 
-    String Username,UserContact,UserCode,Email,UserType,UserImage,BlockName;
+    String Username,UserContact,UserCode,Email,UserType,UserImage,BlockName,JelaName,UpoJelaName;
 
     ProgressDialog progressDialog;
     LocalStorage localStorage;
@@ -112,7 +112,9 @@ public class LoginScreenActivity extends AppCompatActivity {
              UserImage=userResponse.getUserImage();
              UserType=userResponse.getUserType();
              BlockName=userResponse.getBlockName();
-             userModel=new UserModel(UserId,Username,UserContact,Email,UserTypeId,UserCode,UserImage,UserType,BlockName);
+             JelaName=userResponse.getJelaName();
+             UpoJelaName=userResponse.getUpoJelaName();
+             userModel=new UserModel(UserId,Username,UserContact,Email,UserTypeId,UserCode,UserImage,UserType,BlockName,JelaName,UpoJelaName);
 
             if(UserId!=0){
               //  setprogessbarVisibilty(false);

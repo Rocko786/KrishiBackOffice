@@ -79,7 +79,7 @@ public class DataEntryFragment extends Fragment {
     Spinner spn_FasolName;
     Spinner spn_FasolAbstha;
     Spinner spn_FasolJat;
-    AppCompatButton btn_search,btn_save;
+    AppCompatButton btn_search,btn_save,btn_back;
     AppCompatTextView txt_selectdate;
     RelativeLayout rel_search,rel_report;
     RecyclerView rec_entry_report;
@@ -145,6 +145,13 @@ public class DataEntryFragment extends Fragment {
         btn_save.setOnClickListener(v -> {
             saveEntryData();
         });
+        btn_back.setOnClickListener(view -> {
+            backAllOptions();
+        });
+    }
+    private void backAllOptions() {
+        rel_search.setVisibility(View.VISIBLE);
+        rel_report.setVisibility(View.GONE);
     }
 
     private void validfields() {
@@ -250,6 +257,7 @@ public class DataEntryFragment extends Fragment {
         spn_FasolJat=view.findViewById(R.id.spn_FasolJat);
         btn_search=view.findViewById(R.id.btn_search);
         btn_save=view.findViewById(R.id.btn_save);
+        btn_back=view.findViewById(R.id.btn_back);
         rel_report=view.findViewById(R.id.rel_report);
         rel_search=view.findViewById(R.id.rel_search);
         rec_entry_report=view.findViewById(R.id.rec_entry_report);

@@ -39,7 +39,30 @@ public class UserResponse {
     @Expose
     private String BlockName;
 
-    public String getUserType() {
+    @SerializedName("JelaName")
+    @Expose
+    private String JelaName;
+
+    @SerializedName("UpoJelaName")
+    @Expose
+    private String UpoJelaName;
+
+    public String getJelaName() {
+        return JelaName;
+    }
+
+    public void setJelaName(String jelaName) {
+        JelaName = jelaName;
+    }
+
+    public String getUpoJelaName() {
+        return UpoJelaName;
+    }
+
+    public void setUpoJelaName(String upoJelaName) {
+        UpoJelaName = upoJelaName;    }
+
+ public String getUserType() {
         return UserType;
     }
 

@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,7 +50,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:weightSum="1">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -81,7 +79,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:weightSum="1">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -110,20 +108,22 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                   android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="মৌসুম নাম:"
                         android:textColor="@color/toolbar_color"
-                        android:textSize="25sp" />
+                        android:textSize="25sp"
+                        android:layout_weight="0.5"/>
 
                     <Spinner
                         android:id="@+id/spn_mosum"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -134,11 +134,12 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                   android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:text="ফসলের প্রকার:"
                         android:textColor="@color/toolbar_color"
                         android:textSize="25sp" />
@@ -147,7 +148,8 @@
                         android:id="@+id/spn_FasolProkar"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -158,20 +160,22 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                   android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="ফসলের নাম:"
                         android:textColor="@color/toolbar_color"
-                        android:textSize="@dimen/report_text_size" />
+                        android:textSize="@dimen/report_text_size"
+                        android:layout_weight="0.5"/>
 
                     <Spinner
                         android:id="@+id/spn_FasolName"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -182,11 +186,12 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                   android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:text="ফসলের অবস্থান:"
                         android:textColor="@color/toolbar_color"
                         android:textSize="@dimen/report_text_size" />
@@ -195,7 +200,8 @@
                         android:id="@+id/spn_FasolAbstha"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -206,11 +212,12 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                   android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:text="ফসলের জাত:"
                         android:textColor="@color/toolbar_color"
                         android:textSize="@dimen/report_text_size" />
@@ -219,7 +226,8 @@
                         android:id="@+id/spn_FasolJat"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -230,11 +238,13 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                   android:orientation="horizontal"
+                    android:weightSum="1">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:text="ফসল নাম:"
                         android:textColor="@color/toolbar_color"
                         android:textSize="@dimen/report_text_size" />
@@ -243,6 +253,7 @@
                         android:id="@+id/spn_Fasol"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
+                        android:layout_weight="0.5"
                         android:layout_height="50dp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -256,7 +267,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+           android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
@@ -286,6 +297,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Sl.No."
+                    android:textAlignment="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fosol Name"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="wrap_content"

@@ -180,9 +180,9 @@ public class DataReportFragment extends Fragment {
             else  if(VegSubCategoryId==0){
                 showAlertMessage("Please Select VegSubCategory");
             }
-            else  if(VegId==0){
+            /*else  if(VegId==0){
                 showAlertMessage("Please Select Veg");
-            }
+            }*/
             else {
                 getAllReports();
             }
