@@ -65,7 +65,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 public class DataEntryFragment extends Fragment {
     MainActivity mainActivity;
-    String txtselectDate="";
+    String txtselectDate="",UserType;
     DatePickerDialog datePickerDialog;
     ClimateViewModel climateViewModel;
     VegTypeViewModel vegTypeViewModel;
@@ -140,7 +140,13 @@ public class DataEntryFragment extends Fragment {
         });
 
         btn_search.setOnClickListener(view -> {
-            validfields();
+            if (UserType.equals("Super Admin")) {
+                showAlertMessage("এই ধরনের ব্যবহারকারীর জন্য এই বৈশিষ্ট্যটি অনুমোদিত নয় ৷");
+            }
+            else {
+                validfields();
+            }
+
         });
         btn_save.setOnClickListener(v -> {
             saveEntryData();
@@ -247,6 +253,7 @@ public class DataEntryFragment extends Fragment {
         user = gson.fromJson(userString, UserModel.class);
         if (user != null) {
             UserId=user.getUserId();
+            UserType=user.getUserType();
         }
 
         txt_selectdate=view.findViewById(R.id.txt_selectdate);
@@ -492,7 +499,9 @@ public class DataEntryFragment extends Fragment {
             vegViewModel = ViewModelProviders.of(this).get(VegViewModel.class);
             vegViewModel.getVegForDataRepository(VegCategoryId,VegSubCategoryId).observe(mainActivity,vegResponse -> {
                 List<VegListModel> veg = vegResponse.getVegList();
+                if(veg!=null)
                 vegListModelArrayList.addAll(veg);
+
                 if(vegListModelArrayList.size() > 0){
                     rel_search.setVisibility(View.GONE);
                     rel_report.setVisibility(View.VISIBLE);

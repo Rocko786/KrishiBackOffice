@@ -296,25 +296,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sl.No."
+                    android:text="ক্রমিক"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Fosol Name"
+                    android:text="ফসল নাম"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Date"
+                    android:text="তারিখ"
                     android:textAlignment="center"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Quantity"
+                    android:text="পরিমাণ"
                     android:textAlignment="center"/>
             </TableRow>
         </TableLayout>

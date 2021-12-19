@@ -206,6 +206,7 @@ public class DataReportFragment extends Fragment {
                 dataEntryReportViewModel.getDataEntryReportGetAll(entrymodel).observe(mainActivity, datareports -> {
                     setProgressbar(0);
                 List<DataEntryReportListModel> dataEntryReportListModels = datareports.getDataEntryReportListModels();
+                if(dataEntryReportListModels!=null)
                 dataEntryReportListModelArrayList.addAll(dataEntryReportListModels);
                    // dataEntryReportAdapter.notifyDataSetChanged();
                     if(dataEntryReportListModelArrayList.size() > 0){
@@ -216,7 +217,7 @@ public class DataReportFragment extends Fragment {
                     }
                     else {
                         setProgressbar(0);
-                        showAlertMessage("Data Not Found");
+                        showAlertMessage("তথ্য পাওয়া যায়নি |");
                         rel_search.setVisibility(View.VISIBLE);
                         rel_report.setVisibility(View.GONE);
                     }

@@ -39,7 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="Name :" />
+                        android:text="নাম :" />
 
                     <TextView
                         android:id="@+id/txt_name"
@@ -67,7 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="Email :" />
+                        android:text="ইমেল :" />
 
                     <TextView
                         android:id="@+id/txt_email"
@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="Mobile :" />
+                        android:text="মোবাইল :" />
 
                     <TextView
                         android:id="@+id/txt_mobile"
@@ -124,7 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="User Type :" />
+                        android:text="ব্যবহারকারীর ধরন :" />
 
                     <TextView
                         android:id="@+id/txt_usertype"
@@ -153,7 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="UserCode :" />
+                        android:text="ইউজার কোড :" />
 
                     <TextView
                         android:id="@+id/txt_usercode"
@@ -182,7 +182,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="Jela :" />
+                        android:text="জেলা :" />
 
                     <TextView
                         android:id="@+id/txt_userJela"
@@ -211,7 +211,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="Upo Jela :" />
+                        android:text="উপজেলা :" />
 
                     <TextView
                         android:id="@+id/txt_userUpojela"
@@ -240,7 +240,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
-                        android:text="Block :" />
+                        android:text="ব্লক :" />
 
                     <TextView
                         android:id="@+id/txt_userBlock"
