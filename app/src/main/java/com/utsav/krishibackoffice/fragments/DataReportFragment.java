@@ -212,7 +212,7 @@ public class DataReportFragment extends Fragment {
                     if(dataEntryReportListModelArrayList.size() > 0){
                         rel_search.setVisibility(View.GONE);
                         rel_report.setVisibility(View.VISIBLE);
-                        setupRecyclerView();
+                        setupRecyclerView();//set recycle view
 
                     }
                     else {
