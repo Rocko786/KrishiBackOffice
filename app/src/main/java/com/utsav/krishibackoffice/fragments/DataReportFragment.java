@@ -345,6 +345,7 @@ public class DataReportFragment extends Fragment {
         }
         catch (Exception ex){
             setProgressbar(0);
+            showAlertMessage(ex.getMessage());
         }
         finally {
             setProgressbar(0);
@@ -388,6 +389,7 @@ public class DataReportFragment extends Fragment {
         }
         catch (Exception ex){
             setProgressbar(0);
+            showAlertMessage(ex.getMessage());
         }
         finally {
             setProgressbar(0);
@@ -430,6 +432,7 @@ public class DataReportFragment extends Fragment {
         }
         catch (Exception ex){
             setProgressbar(0);
+            showAlertMessage(ex.getMessage());
         }
         finally {
             setProgressbar(0);
@@ -476,6 +479,7 @@ public class DataReportFragment extends Fragment {
         }
         catch (Exception ex){
             setProgressbar(0);
+            showAlertMessage(ex.getMessage());
         }
         finally {
             setProgressbar(0);
@@ -517,6 +521,7 @@ public class DataReportFragment extends Fragment {
         }
         catch (Exception ex){
             setProgressbar(0);
+            showAlertMessage(ex.getMessage());
         }
         finally {
             setProgressbar(0);
@@ -559,6 +564,7 @@ public class DataReportFragment extends Fragment {
         }
         catch (Exception ex){
             setProgressbar(0);
+            showAlertMessage(ex.getMessage());
         }
         finally {
             setProgressbar(0);

@@ -298,7 +298,7 @@ public class DataEntryFragment extends Fragment {
             });
         }
         catch (Exception ex){
-
+            showAlertMessage(ex.getMessage());
         }
         finally {
 
@@ -340,7 +340,7 @@ public class DataEntryFragment extends Fragment {
             });
         }
         catch (Exception ex){
-
+            showAlertMessage(ex.getMessage());
         }
         finally {
 
@@ -380,7 +380,7 @@ public class DataEntryFragment extends Fragment {
             });
         }
         catch (Exception ex){
-
+            showAlertMessage(ex.getMessage());
         }
         finally {
 
@@ -424,7 +424,7 @@ public class DataEntryFragment extends Fragment {
             });
         }
         catch (Exception ex){
-
+            showAlertMessage(ex.getMessage());
         }
         finally {
 
@@ -464,7 +464,7 @@ public class DataEntryFragment extends Fragment {
             });
         }
         catch (Exception ex){
-
+            showAlertMessage(ex.getMessage());
         }
         finally {
 
@@ -526,8 +526,8 @@ public class DataEntryFragment extends Fragment {
         try {
 
 
-            DataEntryModel entrymodel;
-            entrymodel=new DataEntryModel(txtselectDate,ClimateId,VegPhaseId,VegCategoryId,VegTypeId,VegSubCategoryId,UserId,vegListModelArrayList);
+                DataEntryModel entrymodel;
+                entrymodel=new DataEntryModel(txtselectDate,ClimateId,VegPhaseId,VegCategoryId,VegTypeId,VegSubCategoryId,UserId,vegListModelArrayList);
 
             dataEntryReportViewModel = ViewModelProviders.of(this).get(DataEntryReportViewModel.class);
             dataEntryReportViewModel.entryDataSave(entrymodel).observe(mainActivity,dataEntryReportResponse -> {

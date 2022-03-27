@@ -6,7 +6,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,10 +21,11 @@ import com.utsav.krishibackoffice.models.UserModel;
 
 public class SpalshScreenActivity extends AppCompatActivity {
     AppCompatImageView img_applogo;
-    AppCompatTextView txt_title;
+    AppCompatTextView txt_title,txt_version;
     LocalStorage localStorage;
     String userString;
     UserModel userModel;
+    String version = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +35,28 @@ public class SpalshScreenActivity extends AppCompatActivity {
         setNextScreen();
     }
 
+    private String getVersionName(Context context) {
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            version = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
+    }
+
     private void instance() {
+
         localStorage = new LocalStorage(getApplicationContext());
         img_applogo=(AppCompatImageView)findViewById(R.id.img_applogo);
         txt_title=(AppCompatTextView)findViewById(R.id.txt_title);
+        txt_version=(AppCompatTextView)findViewById(R.id.txt_version);
+
+        txt_version.setText(getVersionName(SpalshScreenActivity.this));
 
         img_applogo.animate().alpha(0f).setDuration(0);
         txt_title.animate().alpha(0f).setDuration(0);
+       // txt_version.animate().alpha(0f).setDuration(0);
         img_applogo.animate().alpha(1f).setDuration(1000).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

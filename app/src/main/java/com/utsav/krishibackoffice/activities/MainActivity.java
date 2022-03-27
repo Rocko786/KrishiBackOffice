@@ -1,6 +1,7 @@
 package com.utsav.krishibackoffice.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,19 +31,23 @@ public class MainActivity extends AppCompatActivity {
     TextView txt_title;
     LocalStorage localStorage;
     String Title;
-
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder dialogBuilder;
+    //private TextView textView;
+    private Button btn_ok;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         instance();
 
-        setupscreen(new HomeDashboardFragment());
+        setupscreen(new HomeDashboardFragment(),"Home");
 
     }
 
-    private void setupscreen(Fragment fragment) {
-        txt_title.setText("Home");
+    private void setupscreen(Fragment fragment,String pageTitle) {
+        txt_title.setText(pageTitle);
+        Title=pageTitle;
        // toolbar.setTitle("Home");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
@@ -66,30 +73,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
 
                     case R.id.nav_home:
-                        setupscreen(new HomeDashboardFragment());
-                        Title="Home";
-                        txt_title.setText("Home");
+                        setupscreen(new HomeDashboardFragment(),"Home");
                         return true;
 
                     case R.id.nav_data_entry:
-                        setupscreen(new DataEntryFragment());
-                        Title="Data Entry";
-                       // toolbar.setTitle("Data Entry");
-                        txt_title.setText("Data Entry");
+                        setupscreen(new DataEntryFragment(),"Data Entry");
                         return true;
 
                     case R.id.nav_report:
-                        setupscreen(new DataReportFragment());
-                        Title="Data Report";
-                        //toolbar.setTitle("Data Report");
-                        txt_title.setText("Data Report");
+                        setupscreen(new DataReportFragment(),"Data Report");
                         return true;
 
                     case R.id.nav_profile:
-                        setupscreen(new MyProfileFragment());
-                        Title="My Profile";
-                       // toolbar.setTitle("My Profile");
-                        txt_title.setText("My Profile");
+                        setupscreen(new MyProfileFragment(),"My Profile");
                         return true;
 
 
@@ -119,14 +115,22 @@ public class MainActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
             return true;
         }
+
+        if (id == R.id.action_info) {
+            //Toast.makeText(getApplicationContext(),"FAG",Toast.LENGTH_LONG).show();
+            //return true;
+            createNewFaqDialog();
+        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+     //   super.onBackPressed();
+        System.out.println(Title);
         if(!Title.equals("Home")){
-            setupscreen(new HomeDashboardFragment());
+            View view = bottomNav.findViewById(R.id.nav_home);
+            view.performClick();
             Title="Home";
             txt_title.setText("Home");
             toolbar.setTitle("");
@@ -155,5 +159,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    public void createNewFaqDialog(){
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View faqpopupView= getLayoutInflater().inflate(R.layout.popup,null);
+        btn_ok = (Button) faqpopupView.findViewById(R.id.btn_ok);
+
+        dialogBuilder.setView(faqpopupView);
+        alertDialog =dialogBuilder.create();
+        alertDialog.show();
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }
